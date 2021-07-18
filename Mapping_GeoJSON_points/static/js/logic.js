@@ -2,7 +2,7 @@
 console.log('working');
 
 //Create map layer with zoom level
-let map = L.map("simpleMap").setView([37.5, -122.5], 10);
+let map = L.map("simpleMap").setView([30, 30], 2);
 
 // An array containing each city's location, state, and population.
 
@@ -28,6 +28,7 @@ let sanFranAirport =
             "coordinates":[-122.375,37.61899948120117]}}
 ]};
 
+
 // console.log(sanFranAirport.features[0].geometry.coordinates);
 
 // L.geoJson(sanFranAirport, {
@@ -41,7 +42,7 @@ let sanFranAirport =
 
 L.geoJson(sanFranAirport, {
     onEachFeature:  function(feature, layer) {
-        console.log(layer);
+        // console.log(layer);
         layer.bindPopup(`${feature.properties.city} <hr> airport code:  ${feature.properties.faa}`);
     }
 }).addTo(map);
@@ -102,6 +103,27 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/
     accessToken:  API_KEY
 });
 
+// Accessing airport data stored on GitHub
+let airportData = "https://raw.githubusercontent.com/ccwillmore/Mapping_Earthquakes/main/majorAirports.json";
+// Grabbing geoJson data
+d3.json(airportData).then(function(data) {
+    // console.log(data);
+    for (let i=0;i<35;i++) {
+        console.log(data.features[i].properties.city);
+// Creating a geoJson layer with the airport data
+        L.geoJson(data).bindPopup(`${data.features[i].properties.city}`).addTo(map);
+    }
+});
 
+
+
+// L.geoJson(sanFranAirport, {
+//     pointToLayer:  function (feature, latlng) {
+        
+//         console.log(feature);
+//         return L.marker(latlng)
+//         .bindPopup(`${feature.properties.city}, CA <hr>${feature.properties.faa}`)
+//     }
+// }).addTo(map);
 streets.addTo(map);
 
