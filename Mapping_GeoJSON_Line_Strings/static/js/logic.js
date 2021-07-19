@@ -104,7 +104,7 @@ let map = L.map("simpleMap", {
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
 
-//Create a style for the lines
+//Create a style for the linesgit commit -m"
 let myStyle = {
     color:  'yellow',
     weight:  2
